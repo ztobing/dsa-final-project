@@ -11,12 +11,12 @@
 Timer::Timer(string name)
 {
     this->name = name;
-    start = chrono::high_resolution_clock::now();
+    start = chrono::steady_clock::now();
 }
 
 Timer::~Timer()
 {
-    end = chrono::high_resolution_clock::now();
+    end = chrono::steady_clock::now();
     duration = end - start;
     
     double durationMs = duration.count() * 1000.0;

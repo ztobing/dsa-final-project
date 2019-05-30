@@ -14,6 +14,7 @@
 #include "timer.hpp"
 #include "../algo/recursive.hpp"
 #include "../algo/eagleeye.hpp"
+#include "../algo/breadthfirstsearch.hpp"
 
 using namespace std;
 

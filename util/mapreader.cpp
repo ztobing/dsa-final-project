@@ -63,6 +63,12 @@ bool MapReader::read(int algo)
             e.run();
             break;
         }
+        case 3:
+        {
+            BreadthFirstSearch b(this->raw, this->start, this->end, this->spacing);
+            b.run();
+            break;
+        }
     }
     return true;
 }

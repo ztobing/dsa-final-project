@@ -12,6 +12,7 @@ private:
     struct Node
     {
         char data;
+        bool isVisited = false;
         Node* up = NULL;
         Node* right = NULL;
         Node* down = NULL;

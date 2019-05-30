@@ -13,13 +13,6 @@ void EagleEye::run()
 {
     Timer t("EagleEye");
     generateMap();
-    for (int i = 0; i < map.length(); i++)
-    {
-        if (nodeReferences[i] != NULL)
-        {
-            cout << i << ": " << nodeReferences[i]->data << endl;
-        }
-    }
     cout << solve(startNode->down, startNode, spacing) << endl;
     cout << map << endl;
 }
@@ -31,7 +24,6 @@ void EagleEye::generateMap()
         nodeReferences[i] = NULL;
         if (map[i] == '1' || map[i] == '\n' || map[i] == ' ') continue;
         if (!isJunction(i)) continue;
-
 
         Node* newNode = new Node();
         if (map[i] == '2') this->startNode = newNode;
@@ -58,10 +50,6 @@ void EagleEye::checkNodeSurroundings(Node* node, int index)
                 node->up->down = node;
                 break;
             }
-            else
-            {
-                cout << "null" << endl;
-            }
         }
     }
 
@@ -76,10 +64,6 @@ void EagleEye::checkNodeSurroundings(Node* node, int index)
                 node->left = nodeReferences[i];
                 node->left->right = node;
                 break;
-            }
-            else
-            {
-                cout << "null" << endl;
             }
         }
     }
@@ -115,12 +99,14 @@ bool EagleEye::isJunction(int index)
 
 bool EagleEye::solve(Node* currentNode, Node* lastNode, int spacing)
 {
+    currentNode->isVisited = true;
+
     // Base case
     if (currentNode->data == '3') return true;
 
     // Move left
     if (currentNode->left != NULL)
-        if (currentNode->left != lastNode)
+        if (currentNode->left != lastNode && !currentNode->left->isVisited)
             if (solve(currentNode->left , currentNode, spacing))
             {
                 return true;
@@ -128,7 +114,7 @@ bool EagleEye::solve(Node* currentNode, Node* lastNode, int spacing)
     
     // Move right
     if (currentNode->right != NULL)
-        if (currentNode->right != lastNode)
+        if (currentNode->right != lastNode && !currentNode->right->isVisited)
             if (solve(currentNode->right , currentNode, spacing))
             {
                 return true;
@@ -136,7 +122,7 @@ bool EagleEye::solve(Node* currentNode, Node* lastNode, int spacing)
 
     // Move down
     if (currentNode->down != NULL)
-        if (currentNode->down != lastNode)
+        if (currentNode->down != lastNode && !currentNode->down->isVisited)
             if (solve(currentNode->down , currentNode, spacing))
             {
                 return true;
@@ -144,7 +130,7 @@ bool EagleEye::solve(Node* currentNode, Node* lastNode, int spacing)
 
     // Move up
     if (currentNode->up != NULL)
-        if (currentNode->up != lastNode)
+        if (currentNode->up != lastNode && !currentNode->up->isVisited)
             if (solve(currentNode->up , currentNode, spacing))
             {
                 return true;

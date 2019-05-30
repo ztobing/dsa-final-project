@@ -28,6 +28,7 @@ void EagleEye::generateMap()
 {
     for (int i = 0; i < map.length(); i++)
     {
+        nodeReferences[i] = NULL;
         if (map[i] == '1' || map[i] == '\n' || map[i] == ' ') continue;
         if (!isJunction(i)) continue;
 
@@ -67,7 +68,7 @@ void EagleEye::checkNodeSurroundings(Node* node, int index)
     // Check left
     if (index - 1 > 0)
     {
-        for (int i = index; i > 0; i--)
+        for (int i = index - 1; i > 0; i--)
         {
             if (map[i] == '1') break;
             if (nodeReferences[i] != NULL)

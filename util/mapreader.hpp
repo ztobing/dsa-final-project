@@ -13,6 +13,7 @@
 #include "file.hpp"
 #include "timer.hpp"
 #include "../algo/recursive.hpp"
+#include "../algo/eagleeye.hpp"
 
 using namespace std;
 

@@ -11,7 +11,7 @@ class EagleEye
 private:
     struct Node
     {
-        int data;
+        char data;
         Node* up = NULL;
         Node* right = NULL;
         Node* down = NULL;
@@ -24,6 +24,7 @@ private:
     void generateMap();
     void checkNodeSurroundings(Node* node, int index);
     bool isJunction(int index);
+    bool solve(Node* currentNode, Node* lastNode, int spacing);
 public:
     EagleEye(string map, int start, int end, int spacing);
     void run();

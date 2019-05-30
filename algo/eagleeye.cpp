@@ -11,7 +11,16 @@ EagleEye::EagleEye(string map, int start, int end, int spacing)
 
 void EagleEye::run()
 {
+    Timer t("EagleEye");
     generateMap();
+    for (int i = 0; i < map.length(); i++)
+    {
+        if (nodeReferences[i] != NULL)
+        {
+            cout << i << ": " << nodeReferences[i]->data << endl;
+        }
+    }
+    cout << solve(startNode->down, startNode, spacing) << endl;
     cout << map << endl;
 }
 
@@ -39,7 +48,7 @@ void EagleEye::checkNodeSurroundings(Node* node, int index)
     if (index - spacing > 0)
     {
         // Check if there's a node on top of a node
-        for (int i = index; i > 0; i - spacing)
+        for (int i = index - spacing; i > 0; i = i - spacing)
         {
             if (map[i] == '1') break;
             if (nodeReferences[i] != NULL)
@@ -99,5 +108,46 @@ bool EagleEye::isJunction(int index)
     if ((up ^ down) ^ (left ^ right))
         return true;
     
+    return false;
+}
+
+
+bool EagleEye::solve(Node* currentNode, Node* lastNode, int spacing)
+{
+    // Base case
+    if (currentNode->data == '3') return true;
+
+    // Move left
+    if (currentNode->left != NULL)
+        if (currentNode->left != lastNode)
+            if (solve(currentNode->left , currentNode, spacing))
+            {
+                return true;
+            }
+    
+    // Move right
+    if (currentNode->right != NULL)
+        if (currentNode->right != lastNode)
+            if (solve(currentNode->right , currentNode, spacing))
+            {
+                return true;
+            }
+
+    // Move down
+    if (currentNode->down != NULL)
+        if (currentNode->down != lastNode)
+            if (solve(currentNode->down , currentNode, spacing))
+            {
+                return true;
+            }
+
+    // Move up
+    if (currentNode->up != NULL)
+        if (currentNode->up != lastNode)
+            if (solve(currentNode->up , currentNode, spacing))
+            {
+                return true;
+            }
+
     return false;
 }

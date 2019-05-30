@@ -77,7 +77,7 @@ void EagleEye::checkNodeSurroundings(Node* node, int index)
 
 bool EagleEye::isJunction(int index)
 {
-    bool up, right, down, left = false;
+    bool up = false, right = false, down = false, left = false;
     
     // Check up
     if (index - spacing > 0)
@@ -89,14 +89,14 @@ bool EagleEye::isJunction(int index)
     if (index - 1 > 0)
         if (map[index - 1] == '0' || map[index - 1] == ' ') left = true;
     // Check right
-    if (index + 1 > 0)
+    if (index + 1 < map.length())
         if (map[index + 1] == '0' || map[index + 1] == ' ') right = true;
     
     // Check if junction
     if ((up && left) || (up && right) || (down && left) || (down && right))
         return true;
     // Check if dead end
-    if (up ^ down ^ left ^ right)
+    if ((up ^ down) ^ (left ^ right))
         return true;
     
     return false;

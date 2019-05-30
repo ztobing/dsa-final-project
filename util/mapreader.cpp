@@ -59,6 +59,8 @@ bool MapReader::read(int algo)
         }
         case 2:
         {
+            EagleEye e(this->raw, this->start, this->end, this->spacing);
+            e.run();
             break;
         }
     }

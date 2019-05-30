@@ -22,24 +22,29 @@ void Recursive::run()
     
     // Top wall
     if (start < spacing)
-        cout << recursive(start + spacing, start, spacing) << endl;
+        recursive(start + spacing, start, spacing);
 
     // Right wall
     else if (map[start + 1] == '\n')
-        cout << recursive(start - 1, start, spacing) << endl;
+        recursive(start - 1, start, spacing);
 
     // Bottom wall
     else if (start > map.length() - spacing && start < map.length())
-        cout << recursive(start - spacing, start, spacing) << endl;
+        recursive(start - spacing, start, spacing);
 
     // Left wall
     else if (start % spacing == 0)
-        cout << recursive(start + 1, start, spacing) << endl;
+        recursive(start + 1, start, spacing);
 
     // Temp
+    for (int i = 0; i < map.length(); i++)
+    {
+        if (map[i] == '5') map[i] = '0';
+    }
     cout << map << endl;
 }
 
+// left hand recursion
 bool Recursive::recursive(int index, int lastIndex, int spacing)
 {
     // Base case
@@ -47,6 +52,8 @@ bool Recursive::recursive(int index, int lastIndex, int spacing)
     if (index > map.length()) return false;
     if (map[index] == '1') return false;
     if (map[index] == '3') return true;
+    if (map[index] == '5') return false;
+    map[index] = '5';
 
     // Move left
     if (index - 1 != lastIndex)

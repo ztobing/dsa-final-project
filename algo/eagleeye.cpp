@@ -22,7 +22,7 @@ void EagleEye::generateMap()
     for (int i = 0; i < map.length(); i++)
     {
         nodeReferences[i] = NULL;
-        if (map[i] == '1' || map[i] == '\n' || map[i] == ' ') continue;
+        if (map[i] == '1' || map[i] == '\n') continue;
         if (!isJunction(i)) continue;
 
         Node* newNode = new Node();
@@ -30,7 +30,6 @@ void EagleEye::generateMap()
         nodeReferences[i] = newNode;
 
         newNode->data = map[i];
-        map[i] = ' '; // temp
         checkNodeSurroundings(newNode, i);
     }
 }
@@ -75,16 +74,16 @@ bool EagleEye::isJunction(int index)
     
     // Check up
     if (index - spacing > 0)
-        if (map[index - spacing] == '0' || map[index - spacing] == ' ') up = true;
+        if (map[index - spacing] == '0') up = true;
     // Check down
     if (index + spacing < map.length())
-        if (map[index + spacing] == '0' || map[index + spacing] == ' ') down = true;
+        if (map[index + spacing] == '0') down = true;
     // Check left
     if (index - 1 > 0)
-        if (map[index - 1] == '0' || map[index - 1] == ' ') left = true;
+        if (map[index - 1] == '0') left = true;
     // Check right
     if (index + 1 < map.length())
-        if (map[index + 1] == '0' || map[index + 1] == ' ') right = true;
+        if (map[index + 1] == '0') right = true;
     
     // Check if junction
     if ((up && left) || (up && right) || (down && left) || (down && right))

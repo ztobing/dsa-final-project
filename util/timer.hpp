@@ -6,8 +6,8 @@
 //  Copyright © 2019 zefryuuko. All rights reserved.
 //
 
-#ifndef timer
-#define timer
+#ifndef timer_hpp
+#define timer_hpp
 
 #include <iostream>
 #include <chrono>

@@ -1,9 +1,11 @@
 //
+//  Maze Solver
+//  ----------------------------------
+//  Salya Wirachman - 2201798143
+//  Zefanya Gedalya B.L.T - 2201796970
+//  ----------------------------------
 //  main.cpp
-//  dsafptest
-//
-//  Created by Zef on 4/19/19.
-//  Copyright © 2019 zefryuuko. All rights reserved.
+//  Handles command line interface
 //
 
 #include <iostream>

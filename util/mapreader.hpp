@@ -1,9 +1,13 @@
 //
+//  Maze Solver
+//  ----------------------------------
+//  Salya Wirachman - 2201798143
+//  Zefanya Gedalya B.L.T - 2201796970
+//  ----------------------------------
 //  mapreader.hpp
-//  dsafptest
-//
-//  Created by Zef on 4/26/19.
-//  Copyright © 2019 zefryuuko. All rights reserved.
+//  A class that handles maze map reading.
+//  This class has methods for validation and calls for
+//  the solving algorithm.
 //
 
 #ifndef mapreader_hpp
@@ -33,4 +37,4 @@ public:
     long size();
 };
 
-#endif /* mapreader_hpp */
+#endif

@@ -1,9 +1,13 @@
 //
-//  Recursive.cpp
-//  dsafptest
-//
-//  Created by Zef on 5/21/19.
-//  Copyright © 2019 zefryuuko. All rights reserved.
+//  Maze Solver
+//  ----------------------------------
+//  Salya Wirachman - 2201798143
+//  Zefanya Gedalya B.L.T - 2201796970
+//  ----------------------------------
+//  recursive.cpp
+//  A solving implementation using recursive method.
+//  This method works by checking the surrounding of the current
+//  position and walk on every path possible until a solution is found.
 //
 
 #include "recursive.hpp"

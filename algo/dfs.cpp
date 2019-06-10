@@ -1,3 +1,15 @@
+//
+//  Maze Solver
+//  ----------------------------------
+//  Salya Wirachman - 2201798143
+//  Zefanya Gedalya B.L.T - 2201796970
+//  ----------------------------------
+//  dfs.cpp
+//  A solving implementation using depth first search method.
+//  This method works by generating nodes on every junction on a map,
+//  linking the nodes then do the DFS algorithm on every node.
+//
+
 #include "dfs.hpp"
 
 DFS::DFS(string map, int start, int end, int spacing)

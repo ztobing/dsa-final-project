@@ -1,9 +1,13 @@
 //
-//  fileutil.hpp
-//  dsafptest
-//
-//  Created by Zef on 4/19/19.
-//  Copyright © 2019 zefryuuko. All rights reserved.
+//  Maze Solver
+//  ----------------------------------
+//  Salya Wirachman - 2201798143
+//  Zefanya Gedalya B.L.T - 2201796970
+//  ----------------------------------
+//  file.hpp
+//  A class that handles file I/O process.
+//  This class enables higher level file I/O methods to make things easier
+//  while working with this project.
 //
 
 #ifndef file_hpp
@@ -25,7 +29,6 @@ public:
     void append(string);
 };
 
-#endif /* fileutil_hpp */
+#endif
 
-
-// Res: http://www.cplusplus.com/doc/tutorial/files/
+// Resource: http://www.cplusplus.com/doc/tutorial/files/

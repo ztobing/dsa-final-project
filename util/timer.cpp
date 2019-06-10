@@ -1,9 +1,11 @@
 //
-//  metrics.cpp
-//  dsafptest
-//
-//  Created by Zef on 4/19/19.
-//  Copyright © 2019 zefryuuko. All rights reserved.
+//  Maze Solver
+//  ----------------------------------
+//  Salya Wirachman - 2201798143
+//  Zefanya Gedalya B.L.T - 2201796970
+//  ----------------------------------
+//  timer.cpp
+//  A class that handles method runtime tracking.
 //
 
 #include "timer.hpp"

@@ -1,3 +1,15 @@
+//
+//  Maze Solver
+//  ----------------------------------
+//  Salya Wirachman - 2201798143
+//  Zefanya Gedalya B.L.T - 2201796970
+//  ----------------------------------
+//  bfs.hpp
+//  A solving implementation using breadth first search method.
+//  This method works by generating nodes on every junction on a map,
+//  linking the nodes then do the BFS algorithm on every node.
+//
+
 #ifndef bfs_hpp
 #define bfs_hpp
 

@@ -1,5 +1,5 @@
-#ifndef breadthfirstsearch_hpp
-#define breadthfirstsearch_hpp
+#ifndef bfs_hpp
+#define bfs_hpp
 
 #include <iostream>
 #include <queue>
@@ -7,7 +7,7 @@
 
 using namespace std;
 
-class BreadthFirstSearch
+class BFS
 {
 private:
     struct Node
@@ -29,7 +29,7 @@ private:
     bool isJunction(int index);
     bool solve();
 public:
-    BreadthFirstSearch(string map, int start, int end, int spacing);
+    BFS(string map, int start, int end, int spacing);
     void run();
 };
 

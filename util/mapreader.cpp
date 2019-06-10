@@ -59,13 +59,13 @@ bool MapReader::read(int algo)
         }
         case 2:
         {
-            EagleEye e(this->raw, this->start, this->end, this->spacing);
-            e.run();
+            DFS d(this->raw, this->start, this->end, this->spacing);
+            d.run();
             break;
         }
         case 3:
         {
-            BreadthFirstSearch b(this->raw, this->start, this->end, this->spacing);
+            BFS b(this->raw, this->start, this->end, this->spacing);
             b.run();
             break;
         }

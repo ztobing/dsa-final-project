@@ -1,6 +1,6 @@
-#include "breadthfirstsearch.hpp"
+#include "dfs.hpp"
 
-BreadthFirstSearch::BreadthFirstSearch(string map, int start, int end, int spacing)
+DFS::DFS(string map, int start, int end, int spacing)
 {
     this->map = map;
     this->start = start;
@@ -9,16 +9,15 @@ BreadthFirstSearch::BreadthFirstSearch(string map, int start, int end, int spaci
     this->nodeReferences = new Node*[map.length()];
 }
 
-void BreadthFirstSearch::run()
+void DFS::run()
 {
-    Timer t("BreadthFirstSearch");
+    Timer t("DFS");
     generateMap();
-    nodeQueue.push(startNode);
-    solve();
+    cout << solve(startNode->down, startNode, spacing) << endl;
     cout << map << endl;
 }
 
-void BreadthFirstSearch::generateMap()
+void DFS::generateMap()
 {
     for (int i = 0; i < map.length(); i++)
     {
@@ -35,7 +34,7 @@ void BreadthFirstSearch::generateMap()
     }
 }
 
-void BreadthFirstSearch::checkNodeSurroundings(Node* node, int index)
+void DFS::checkNodeSurroundings(Node* node, int index)
 {
     // Check top
     if (index - spacing > 0)
@@ -69,7 +68,7 @@ void BreadthFirstSearch::checkNodeSurroundings(Node* node, int index)
     }
 }
 
-bool BreadthFirstSearch::isJunction(int index)
+bool DFS::isJunction(int index)
 {
     bool up = false, right = false, down = false, left = false;
     
@@ -96,29 +95,45 @@ bool BreadthFirstSearch::isJunction(int index)
     return false;
 }
 
-bool BreadthFirstSearch::solve()
+
+bool DFS::solve(Node* currentNode, Node* lastNode, int spacing)
 {
+    currentNode->isVisited = true;
+
     // Base case
-    if (nodeQueue.empty()) return false;
+    if (currentNode->data == '3') return true;
 
-    queue<Node*> checkedNode;
-    // Check if a node in the queue is '3'
-    while (!nodeQueue.empty())
-    {
-        if (nodeQueue.front()->data == '3') return true;
-        checkedNode.push(nodeQueue.front());
-        nodeQueue.front()->isVisited = true;
-        nodeQueue.pop();
-    }
+    // Move left
+    if (currentNode->left != NULL)
+        if (currentNode->left != lastNode && !currentNode->left->isVisited)
+            if (solve(currentNode->left , currentNode, spacing))
+            {
+                return true;
+            }
+    
+    // Move right
+    if (currentNode->right != NULL)
+        if (currentNode->right != lastNode && !currentNode->right->isVisited)
+            if (solve(currentNode->right , currentNode, spacing))
+            {
+                return true;
+            }
 
-    // Queue next nodes
-    while (!checkedNode.empty())
-    {
-        Node* currentNode = checkedNode.front();
-        if (currentNode->up != NULL && !currentNode->up->isVisited) nodeQueue.push(currentNode->up);
-        if (currentNode->down != NULL && !currentNode->down->isVisited) nodeQueue.push(currentNode->down);
-        if (currentNode->left != NULL && !currentNode->left->isVisited) nodeQueue.push(currentNode->left);
-        if (currentNode->right != NULL && !currentNode->right->isVisited) nodeQueue.push(currentNode->right);
-        checkedNode.pop();
-    }
+    // Move down
+    if (currentNode->down != NULL)
+        if (currentNode->down != lastNode && !currentNode->down->isVisited)
+            if (solve(currentNode->down , currentNode, spacing))
+            {
+                return true;
+            }
+
+    // Move up
+    if (currentNode->up != NULL)
+        if (currentNode->up != lastNode && !currentNode->up->isVisited)
+            if (solve(currentNode->up , currentNode, spacing))
+            {
+                return true;
+            }
+
+    return false;
 }

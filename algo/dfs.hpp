@@ -1,12 +1,12 @@
-#ifndef eagleeye_hpp
-#define eagleeye_hpp
+#ifndef dfs_hpp
+#define dfs_hpp
 
 #include <iostream>
 #include "../util/timer.hpp"
 
 using namespace std;
 
-class EagleEye
+class DFS
 {
 private:
     struct Node
@@ -27,7 +27,7 @@ private:
     bool isJunction(int index);
     bool solve(Node* currentNode, Node* lastNode, int spacing);
 public:
-    EagleEye(string map, int start, int end, int spacing);
+    DFS(string map, int start, int end, int spacing);
     void run();
 };
 

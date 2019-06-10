@@ -1,6 +1,6 @@
-#include "eagleeye.hpp"
+#include "bfs.hpp"
 
-EagleEye::EagleEye(string map, int start, int end, int spacing)
+BFS::BFS(string map, int start, int end, int spacing)
 {
     this->map = map;
     this->start = start;
@@ -9,15 +9,16 @@ EagleEye::EagleEye(string map, int start, int end, int spacing)
     this->nodeReferences = new Node*[map.length()];
 }
 
-void EagleEye::run()
+void BFS::run()
 {
-    Timer t("EagleEye");
+    Timer t("BFS");
     generateMap();
-    cout << solve(startNode->down, startNode, spacing) << endl;
+    nodeQueue.push(startNode);
+    solve();
     cout << map << endl;
 }
 
-void EagleEye::generateMap()
+void BFS::generateMap()
 {
     for (int i = 0; i < map.length(); i++)
     {
@@ -34,7 +35,7 @@ void EagleEye::generateMap()
     }
 }
 
-void EagleEye::checkNodeSurroundings(Node* node, int index)
+void BFS::checkNodeSurroundings(Node* node, int index)
 {
     // Check top
     if (index - spacing > 0)
@@ -68,7 +69,7 @@ void EagleEye::checkNodeSurroundings(Node* node, int index)
     }
 }
 
-bool EagleEye::isJunction(int index)
+bool BFS::isJunction(int index)
 {
     bool up = false, right = false, down = false, left = false;
     
@@ -95,45 +96,29 @@ bool EagleEye::isJunction(int index)
     return false;
 }
 
-
-bool EagleEye::solve(Node* currentNode, Node* lastNode, int spacing)
+bool BFS::solve()
 {
-    currentNode->isVisited = true;
-
     // Base case
-    if (currentNode->data == '3') return true;
+    if (nodeQueue.empty()) return false;
 
-    // Move left
-    if (currentNode->left != NULL)
-        if (currentNode->left != lastNode && !currentNode->left->isVisited)
-            if (solve(currentNode->left , currentNode, spacing))
-            {
-                return true;
-            }
-    
-    // Move right
-    if (currentNode->right != NULL)
-        if (currentNode->right != lastNode && !currentNode->right->isVisited)
-            if (solve(currentNode->right , currentNode, spacing))
-            {
-                return true;
-            }
+    queue<Node*> checkedNode;
+    // Check if a node in the queue is '3'
+    while (!nodeQueue.empty())
+    {
+        if (nodeQueue.front()->data == '3') return true;
+        checkedNode.push(nodeQueue.front());
+        nodeQueue.front()->isVisited = true;
+        nodeQueue.pop();
+    }
 
-    // Move down
-    if (currentNode->down != NULL)
-        if (currentNode->down != lastNode && !currentNode->down->isVisited)
-            if (solve(currentNode->down , currentNode, spacing))
-            {
-                return true;
-            }
-
-    // Move up
-    if (currentNode->up != NULL)
-        if (currentNode->up != lastNode && !currentNode->up->isVisited)
-            if (solve(currentNode->up , currentNode, spacing))
-            {
-                return true;
-            }
-
-    return false;
+    // Queue next nodes
+    while (!checkedNode.empty())
+    {
+        Node* currentNode = checkedNode.front();
+        if (currentNode->up != NULL && !currentNode->up->isVisited) nodeQueue.push(currentNode->up);
+        if (currentNode->down != NULL && !currentNode->down->isVisited) nodeQueue.push(currentNode->down);
+        if (currentNode->left != NULL && !currentNode->left->isVisited) nodeQueue.push(currentNode->left);
+        if (currentNode->right != NULL && !currentNode->right->isVisited) nodeQueue.push(currentNode->right);
+        checkedNode.pop();
+    }
 }

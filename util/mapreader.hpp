@@ -13,8 +13,8 @@
 #include "file.hpp"
 #include "timer.hpp"
 #include "../algo/recursive.hpp"
-#include "../algo/eagleeye.hpp"
-#include "../algo/breadthfirstsearch.hpp"
+#include "../algo/dfs.hpp"
+#include "../algo/bfs.hpp"
 
 using namespace std;
 

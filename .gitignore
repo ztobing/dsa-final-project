@@ -4,3 +4,4 @@
 maze
 CMakeLists.txt
 cmake-build-debug
+output.txt

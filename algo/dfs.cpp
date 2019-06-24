@@ -122,7 +122,7 @@ bool DFS::isJunction(int index)
 
 bool DFS::solve(Node* currentNode, Node* lastNode, int spacing)
 {
-    // Solve the map with
+    // Solve the map by checking all possible path with left-right-down-up precedence
     currentNode->isVisited = true;
 
     // Base case

@@ -42,7 +42,7 @@ string File::read()
 void File::write(string data)
 {
     ofstream fs(this->path);
-    fs << data << "\n";
+    fs << data;
     fs.close();
 }
 

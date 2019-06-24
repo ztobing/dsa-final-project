@@ -44,7 +44,8 @@ void Recursive::run()
         isSolved = recursive(start + 1, start, spacing);
 
     cout << "STATUS: " << (isSolved ? "SOLVED" : "NO PATH") << endl;
-    cout << map << endl;
+    File f("output.txt");
+    f.write(map);
 }
 
 bool Recursive::recursive(int index, int lastIndex, int spacing)

@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include "../util/timer.hpp"
+#include "../util/file.hpp"
 
 using namespace std;
 

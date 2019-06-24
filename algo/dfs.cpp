@@ -31,7 +31,8 @@ void DFS::run()
     Timer t("DFS");
     generateMap();
     cout << "STATUS: " << (solve(startNode->down, startNode, spacing) ? "SOLVED" : "NO PATH") << endl;
-    cout << map << endl;
+    File f("output.txt");
+    f.write(map);
 }
 
 void DFS::generateMap()

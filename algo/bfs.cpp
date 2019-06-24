@@ -34,32 +34,35 @@ void BFS::generateMap()
 {
     for (int i = 0; i < map.length(); i++)
     {
-        nodeReferences[i] = NULL;
-        if (map[i] == '1' || map[i] == '\n') continue;
-        if (!isJunction(i)) continue;
+        nodeReferences[i] = NULL;                           // Set the default value to NULL
+        if (map[i] == '1' || map[i] == '\n') continue;      // skip if current index's content is 1 or newline
+        if (!isJunction(i)) continue;                       // Do not add a node if the current position is not a node.
 
-        Node* newNode = new Node();
-        if (map[i] == '2') this->startNode = newNode;
-        nodeReferences[i] = newNode;
+        Node* newNode = new Node();                         // Create new node
+        if (map[i] == '2') this->startNode = newNode;       // Set newNode as the starting point if current index's content is 2
+        nodeReferences[i] = newNode;                        // Store the reference to the new node in an array of node pointers
 
-        newNode->data = map[i];
-        checkNodeSurroundings(newNode, i);
+        newNode->data = map[i];                             // Set the node's data with the current index's content
+        newNode->index = i;                                 // Set the node's index number with current index
+        checkNodeSurroundings(newNode, i);                  // Checks the surrounding nodes and make a link between it
     }
 }
 
 void BFS::checkNodeSurroundings(Node* node, int index)
 {
+    // Links a node to adjacent nodes by checking the presence of nodes in the north and west.
+
     // Check top
     if (index - spacing > 0)
     {
         // Check if there's a node on top of a node
         for (int i = index - spacing; i > 0; i = i - spacing)
         {
-            if (map[i] == '1') break;
-            if (nodeReferences[i] != NULL)
+            if (map[i] == '1') break;           // Break if there is a wall
+            if (nodeReferences[i] != NULL)      // If a node is found
             {
-                node->up = nodeReferences[i];
-                node->up->down = node;
+                node->up = nodeReferences[i];   // Link current node's north link to the adjacent node in the north
+                node->up->down = node;          // Link currrent node's north down link to current node
                 break;
             }
         }
@@ -70,11 +73,11 @@ void BFS::checkNodeSurroundings(Node* node, int index)
     {
         for (int i = index - 1; i > 0; i--)
         {
-            if (map[i] == '1') break;
-            if (nodeReferences[i] != NULL)
+            if (map[i] == '1') break;               // Break id there is a wall
+            if (nodeReferences[i] != NULL)          // If a node is found
             {
-                node->left = nodeReferences[i];
-                node->left->right = node;
+                node->left = nodeReferences[i];     // Link current node's west link to the adjacent node in the west
+                node->left->right = node;           // Link current node's west east link to current node
                 break;
             }
         }
@@ -83,6 +86,9 @@ void BFS::checkNodeSurroundings(Node* node, int index)
 
 bool BFS::isJunction(int index)
 {
+    // A method that checks if a box located at a specific index can be assigned as a junction.
+    // Used to generate graph
+
     bool up = false, right = false, down = false, left = false;
     
     // Check up
@@ -115,17 +121,18 @@ bool BFS::solve()
 
     queue<Node*> checkedNode;
     // Check if a node in the queue is '3'
-    while (!nodeQueue.empty())
+    while (!nodeQueue.empty())                              // Loop through until all nodes in the main queue is empty
     {
-        if (nodeQueue.front()->data == '3') return true;
-        checkedNode.push(nodeQueue.front());
-        nodeQueue.front()->isVisited = true;
-        nodeQueue.pop();
+        if (nodeQueue.front()->data == '3') return true;    // Return true if the end point is found
+        checkedNode.push(nodeQueue.front());                // Push the front node in the queue and put it into the checkedNode queue
+        nodeQueue.front()->isVisited = true;                // Set isVisited value to true on the node
+        nodeQueue.pop();                                    // Remove the node from the queue
     }
 
     // Queue next nodes
-    while (!checkedNode.empty())
+    while (!checkedNode.empty())                            // Loop through until all nodes in the checkedNodes is empty
     {
+        // Add the nodes that needs to be checked later after 
         Node* currentNode = checkedNode.front();
         if (currentNode->up != NULL && !currentNode->up->isVisited) nodeQueue.push(currentNode->up);
         if (currentNode->down != NULL && !currentNode->down->isVisited) nodeQueue.push(currentNode->down);
@@ -133,5 +140,7 @@ bool BFS::solve()
         if (currentNode->right != NULL && !currentNode->right->isVisited) nodeQueue.push(currentNode->right);
         checkedNode.pop();
     }
+
+    // Run solve method recursively until it hits base case
     return solve();
 }

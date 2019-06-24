@@ -73,6 +73,11 @@ bool MapReader::read(int algo)
             b.run();
             break;
         }
+        default:
+        {
+            cerr << "InvalidArgument" << endl;
+            exit(1);
+        }
     }
     return true;
 }

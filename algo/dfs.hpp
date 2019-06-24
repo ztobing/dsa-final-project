@@ -24,6 +24,7 @@ private:
     struct Node
     {
         char data;
+        int index;
         bool isVisited = false;
         Node* up = NULL;
         Node* right = NULL;

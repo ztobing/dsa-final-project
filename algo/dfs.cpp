@@ -43,6 +43,7 @@ void DFS::generateMap()
         nodeReferences[i] = newNode;                        // Store the reference to the new node in an array of node pointers
 
         newNode->data = map[i];                             // Set the node's data with the current index's content
+        newNode->index = i;                                 // Set the node's index number with current index
         checkNodeSurroundings(newNode, i);                  // Checks the surrounding nodes and make a link between it
     }
 }
@@ -127,6 +128,7 @@ bool DFS::solve(Node* currentNode, Node* lastNode, int spacing)
         if (currentNode->left != lastNode && !currentNode->left->isVisited)
             if (solve(currentNode->left , currentNode, spacing))
             {
+                for (int i = currentNode->index; i >= currentNode->left->index; i--) map[i] = '4';
                 return true;
             }
     
@@ -135,6 +137,7 @@ bool DFS::solve(Node* currentNode, Node* lastNode, int spacing)
         if (currentNode->right != lastNode && !currentNode->right->isVisited)
             if (solve(currentNode->right , currentNode, spacing))
             {
+                for (int i = currentNode->index; i <= currentNode->right->index; i++) map[i] = '4';
                 return true;
             }
 
@@ -143,6 +146,7 @@ bool DFS::solve(Node* currentNode, Node* lastNode, int spacing)
         if (currentNode->down != lastNode && !currentNode->down->isVisited)
             if (solve(currentNode->down , currentNode, spacing))
             {
+                for (int i = currentNode->index; i <= currentNode->down->index; i = i + spacing) map[i] = '4';
                 return true;
             }
 
@@ -151,6 +155,7 @@ bool DFS::solve(Node* currentNode, Node* lastNode, int spacing)
         if (currentNode->up != lastNode && !currentNode->up->isVisited)
             if (solve(currentNode->up , currentNode, spacing))
             {
+                for (int i = currentNode->index; i >= currentNode->up->index; i = i - spacing) map[i] = '4';
                 return true;
             }
 

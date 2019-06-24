@@ -21,6 +21,11 @@ DFS::DFS(string map, int start, int end, int spacing)
     this->nodeReferences = new Node*[map.length()];
 }
 
+DFS::~DFS()
+{
+    delete[] this->nodeReferences;
+}
+
 void DFS::run()
 {
     Timer t("DFS");

@@ -41,6 +41,7 @@ private:
     bool solve(Node* currentNode, Node* lastNode, int spacing);
 public:
     DFS(string map, int start, int end, int spacing);
+    ~DFS();
     void run();
 };
 

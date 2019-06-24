@@ -133,4 +133,5 @@ bool BFS::solve()
         if (currentNode->right != NULL && !currentNode->right->isVisited) nodeQueue.push(currentNode->right);
         checkedNode.pop();
     }
+    return solve();
 }

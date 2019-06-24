@@ -22,5 +22,5 @@ Timer::~Timer()
     duration = end - start;
     
     double durationMs = duration.count() * 1000.0;
-    cout << this->name + " took " << durationMs << "ms\n";
+    cout << "TIME_ELAPSED: " << durationMs << "ms\n";
 }

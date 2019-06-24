@@ -15,6 +15,7 @@
 MapReader::MapReader(string mapFile)
 {
     this->start = this->end = this->spacing = -1;
+    this->height = 0;
     File f(mapFile);
     string mapData = f.read();
     if (validate(mapData)) this->raw = mapData;
@@ -34,6 +35,7 @@ bool MapReader::validate(const string &mapFile)
 
         if (mapFile[i] == '\n') 
         {
+            this->height++;
             if (this->spacing == -1)
             {
                 this->spacing = i + 1;
@@ -57,18 +59,24 @@ bool MapReader::read(int algo)
     {
         case 1:
         {
+            cout << "MAP_INFO: " << this->spacing << "x" << this->height << endl;
+            cout << "ALGO: " << "Recursive" << endl;
             Recursive r(this->raw, this->start, this->end, this->spacing);
             r.run();
             break;
         }
         case 2:
         {
+            cout << "MAP_INFO: " << this->spacing << "x" << this->height << endl;
+            cout << "ALGO: " << "DFS" << endl;
             DFS d(this->raw, this->start, this->end, this->spacing);
             d.run();
             break;
         }
         case 3:
         {
+            cout << "MAP_INFO: " << this->spacing << "x" << this->height << endl;
+            cout << "ALGO: " << "BFS" << endl;
             BFS b(this->raw, this->start, this->end, this->spacing);
             b.run();
             break;

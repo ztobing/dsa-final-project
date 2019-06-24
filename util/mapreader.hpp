@@ -29,6 +29,7 @@ private:
     int start;
     int end;
     int spacing;
+    int height;
     bool validate(const string &);
 public:
     MapReader(string);

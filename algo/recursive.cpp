@@ -23,25 +23,27 @@ Recursive::Recursive(string map, int start, int end, int spacing)
 void Recursive::run()
 {
     Timer t("Recursive");
-    
+    bool isSolved = false;
+
     // Determine starting position and run the algorithm based on the location.
 
     // Check top wall
     if (start < spacing)
-        recursive(start + spacing, start, spacing);
+        isSolved = recursive(start + spacing, start, spacing);
 
     // Check right wall
     else if (map[start + 1] == '\n')
-        recursive(start - 1, start, spacing);
+        isSolved = recursive(start - 1, start, spacing);
 
     // Check bottom wall
     else if (start > map.length() - spacing && start < map.length())
-        recursive(start - spacing, start, spacing);
+        isSolved = recursive(start - spacing, start, spacing);
 
     // Check left wall
     else if (start % spacing == 0)
-        recursive(start + 1, start, spacing);
+        isSolved = recursive(start + 1, start, spacing);
 
+    cout << "STATUS: " << (isSolved ? "SOLVED" : "NO PATH") << endl;
     cout << map << endl;
 }
 

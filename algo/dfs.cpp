@@ -25,40 +25,43 @@ void DFS::run()
 {
     Timer t("DFS");
     generateMap();
-    cout << solve(startNode->down, startNode, spacing) << endl;
+    cout << "STATUS: " << (solve(startNode->down, startNode, spacing) ? "SOLVED" : "NO PATH") << endl;
     cout << map << endl;
 }
 
 void DFS::generateMap()
 {
+    // Generate nodes for every junction and every dead end
     for (int i = 0; i < map.length(); i++)
     {
-        nodeReferences[i] = NULL;
-        if (map[i] == '1' || map[i] == '\n') continue;
-        if (!isJunction(i)) continue;
+        nodeReferences[i] = NULL;                           // Set the default value to NULL
+        if (map[i] == '1' || map[i] == '\n') continue;      // skip if current index's content is 1 or newline
+        if (!isJunction(i)) continue;                       // Do not add a node if the current position is not a node.
 
-        Node* newNode = new Node();
-        if (map[i] == '2') this->startNode = newNode;
-        nodeReferences[i] = newNode;
+        Node* newNode = new Node();                         // Create new node
+        if (map[i] == '2') this->startNode = newNode;       // Set newNode as the starting point if current index's content is 2
+        nodeReferences[i] = newNode;                        // Store the reference to the new node in an array of node pointers
 
-        newNode->data = map[i];
-        checkNodeSurroundings(newNode, i);
+        newNode->data = map[i];                             // Set the node's data with the current index's content
+        checkNodeSurroundings(newNode, i);                  // Checks the surrounding nodes and make a link between it
     }
 }
 
 void DFS::checkNodeSurroundings(Node* node, int index)
 {
+    // Links a node to adjacent nodes by checking the presence of nodes in the north and west.
+
     // Check top
     if (index - spacing > 0)
     {
         // Check if there's a node on top of a node
         for (int i = index - spacing; i > 0; i = i - spacing)
         {
-            if (map[i] == '1') break;
-            if (nodeReferences[i] != NULL)
+            if (map[i] == '1') break;           // Break if there is a wall
+            if (nodeReferences[i] != NULL)      // If a node is found
             {
-                node->up = nodeReferences[i];
-                node->up->down = node;
+                node->up = nodeReferences[i];   // Link current node's north link to the adjacent node in the north
+                node->up->down = node;          // Link currrent node's north down link to current node
                 break;
             }
         }
@@ -69,11 +72,11 @@ void DFS::checkNodeSurroundings(Node* node, int index)
     {
         for (int i = index - 1; i > 0; i--)
         {
-            if (map[i] == '1') break;
-            if (nodeReferences[i] != NULL)
+            if (map[i] == '1') break;               // Break id there is a wall
+            if (nodeReferences[i] != NULL)          // If a node is found
             {
-                node->left = nodeReferences[i];
-                node->left->right = node;
+                node->left = nodeReferences[i];     // Link current node's west link to the adjacent node in the west
+                node->left->right = node;           // Link current node's west east link to current node
                 break;
             }
         }
@@ -82,6 +85,9 @@ void DFS::checkNodeSurroundings(Node* node, int index)
 
 bool DFS::isJunction(int index)
 {
+    // A method that checks if a box located at a specific index can be assigned as a junction.
+    // Used to generate graph
+
     bool up = false, right = false, down = false, left = false;
     
     // Check up
@@ -110,6 +116,7 @@ bool DFS::isJunction(int index)
 
 bool DFS::solve(Node* currentNode, Node* lastNode, int spacing)
 {
+    // Solve the map with
     currentNode->isVisited = true;
 
     // Base case

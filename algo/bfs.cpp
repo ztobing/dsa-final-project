@@ -26,7 +26,7 @@ void BFS::run()
     Timer t("BFS");
     generateMap();
     nodeQueue.push(startNode);
-    solve();
+    cout << "STATUS: " << (solve() ? "SOLVED" : "NO PATH") << endl;
     cout << map << endl;
 }
 

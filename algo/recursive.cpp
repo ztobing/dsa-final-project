@@ -24,46 +24,42 @@ void Recursive::run()
 {
     Timer t("Recursive");
     
-    // Top wall
+    // Determine starting position and run the algorithm based on the location.
+
+    // Check top wall
     if (start < spacing)
         recursive(start + spacing, start, spacing);
 
-    // Right wall
+    // Check right wall
     else if (map[start + 1] == '\n')
         recursive(start - 1, start, spacing);
 
-    // Bottom wall
+    // Check bottom wall
     else if (start > map.length() - spacing && start < map.length())
         recursive(start - spacing, start, spacing);
 
-    // Left wall
+    // Check left wall
     else if (start % spacing == 0)
         recursive(start + 1, start, spacing);
 
-    // Temp
-    for (int i = 0; i < map.length(); i++)
-    {
-        if (map[i] == '5') map[i] = '0';
-    }
     cout << map << endl;
 }
 
-// left hand recursion
 bool Recursive::recursive(int index, int lastIndex, int spacing)
 {
     // Base case
-    if (index < 0) return false;
-    if (index > map.length()) return false;
-    if (map[index] == '1') return false;
-    if (map[index] == '3') return true;
-    if (map[index] == '5') return false;
-    map[index] = '5';
+    if (index < 0) return false;                // Return false if index is less than 0
+    if (index > map.length()) return false;     // Return false if index is out of bounds
+    if (map[index] == '1') return false;        // Return false if current index points to a wall
+    if (map[index] == '3') return true;         // Return true if current index poitns to the exit
+    if (map[index] == '5') return false;        // Return false if current index points to a visited box
+    map[index] = '5';                           // Set the current index to visited
 
     // Move left
     if (index - 1 != lastIndex)
         if (recursive(index - 1, index, spacing))
         {
-            map[index] = '4';
+            map[index] = '4';                   // Set the current index as the correct path
             return true;
         }
 
@@ -71,7 +67,7 @@ bool Recursive::recursive(int index, int lastIndex, int spacing)
     if (index + 1 != lastIndex)
         if (recursive(index + 1, index, spacing))
         {
-            map[index] = '4';
+            map[index] = '4';                   // Set the current index as the correct path
             return true;
         }
 
@@ -79,7 +75,7 @@ bool Recursive::recursive(int index, int lastIndex, int spacing)
     if (index + spacing != lastIndex)
         if (recursive(index + spacing, index, spacing))
         {
-            map[index] = '4';
+            map[index] = '4';                   // Set the current index as the correct path
             return true;
         }
 
@@ -87,11 +83,10 @@ bool Recursive::recursive(int index, int lastIndex, int spacing)
     if (index - spacing != lastIndex)
         if (recursive(index - spacing, index, spacing))
         {
-            map[index] = '4';
+            map[index] = '4';                   // Set the current index as the correct path
             return true;
         }
 
-    // If none worked
-    return false;
+    return false;                               // If none of the above returns true, return false
 
 }

@@ -28,8 +28,8 @@ DFS::~DFS()
 
 void DFS::run()
 {
-    Timer t("DFS");
     generateMap();
+    Timer t("DFS");
     cout << "STATUS: " << (solve(startNode->down, startNode, spacing) ? "SOLVED" : "NO PATH") << endl;
     File f("output.txt");
     f.write(map);

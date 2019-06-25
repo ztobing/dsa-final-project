@@ -23,9 +23,9 @@ BFS::BFS(string map, int start, int end, int spacing)
 
 void BFS::run()
 {
-    Timer t("BFS");
     generateMap();
     nodeQueue.push(startNode);
+    Timer t("BFS");
     cout << "STATUS: " << (solve() ? "SOLVED" : "NO PATH") << endl;
     File f("output.txt");
     f.write(map);

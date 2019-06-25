@@ -135,10 +135,26 @@ bool BFS::solve()
     {
         // Add the nodes that needs to be checked later after 
         Node* currentNode = checkedNode.front();
-        if (currentNode->up != NULL && !currentNode->up->isVisited) nodeQueue.push(currentNode->up);
-        if (currentNode->down != NULL && !currentNode->down->isVisited) nodeQueue.push(currentNode->down);
-        if (currentNode->left != NULL && !currentNode->left->isVisited) nodeQueue.push(currentNode->left);
-        if (currentNode->right != NULL && !currentNode->right->isVisited) nodeQueue.push(currentNode->right);
+        if (currentNode->up != NULL && !currentNode->up->isVisited && !currentNode->up->willBeVisited)
+        {
+            currentNode->up->willBeVisited = true;
+            nodeQueue.push(currentNode->up);
+        }
+        if (currentNode->down != NULL && !currentNode->down->isVisited && !currentNode->down->willBeVisited)
+        {
+            currentNode->down->willBeVisited = true;
+            nodeQueue.push(currentNode->down);
+        }
+        if (currentNode->left != NULL && !currentNode->left->isVisited && !currentNode->left->willBeVisited)
+        {
+            currentNode->left->willBeVisited = true;
+            nodeQueue.push(currentNode->left);
+        }
+        if (currentNode->right != NULL && !currentNode->right->isVisited && !currentNode->right->willBeVisited)
+        {
+            currentNode->right->willBeVisited = true;
+            nodeQueue.push(currentNode->right);
+        }
         checkedNode.pop();
     }
 

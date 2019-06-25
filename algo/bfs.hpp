@@ -28,6 +28,7 @@ private:
         char data;
         int index;
         bool isVisited = false;
+        bool willBeVisited = false;
         Node* up = NULL;
         Node* right = NULL;
         Node* down = NULL;

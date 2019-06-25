@@ -18,6 +18,7 @@ BFS::BFS(string map, int start, int end, int spacing)
     this->start = start;
     this->end = end;
     this->spacing = spacing;
+    this->distance = 0;
     this->nodeReferences = new Node*[map.length()];
 }
 
@@ -40,7 +41,13 @@ void BFS::generateMap()
         if (!isJunction(i)) continue;                       // Do not add a node if the current position is not a node.
 
         Node* newNode = new Node();                         // Create new node
-        if (map[i] == '2') this->startNode = newNode;       // Set newNode as the starting point if current index's content is 2
+        newNode->distance = -1;                             // Set the node's distance data with a default value 
+
+        if (map[i] == '2')
+        {
+            this->startNode = newNode;       // Set newNode as the starting point if current index's content is 2
+            newNode->distance = 0;
+        }
         nodeReferences[i] = newNode;                        // Store the reference to the new node in an array of node pointers
 
         newNode->data = map[i];                             // Set the node's data with the current index's content
@@ -124,17 +131,61 @@ bool BFS::solve()
     // Check if a node in the queue is '3'
     while (!nodeQueue.empty())                              // Loop through until all nodes in the main queue is empty
     {
-        if (nodeQueue.front()->data == '3') return true;    // Return true if the end point is found
+        if (nodeQueue.front()->data == '3') 
+        {
+            Node* currentNode = nodeQueue.front();
+            distance++;
+            currentNode->distance = distance;
+
+            // Backtrack to main
+            while (true)
+            {
+                if (currentNode->data == '2') return true;
+                if (currentNode->up != NULL && currentNode->up->distance < distance)
+                {
+                    for (int i = currentNode->index; i >= currentNode->up->index; i = i - spacing) map[i] = '4';
+                    distance = currentNode->up->distance;
+                    currentNode = currentNode->up;
+                }
+                else if (currentNode->left != NULL && currentNode->left->distance < distance)
+                {
+                    for (int i = currentNode->index; i > currentNode->left->index; i--) map[i] = '4';
+                    distance = currentNode->left->distance;
+                    currentNode = currentNode->left;
+                }
+                else if (currentNode->down != NULL && currentNode->down->distance < distance)
+                {
+                    for (int i = currentNode->index; i < currentNode->down->index; i = i + spacing) map[i] = '4';
+                    distance = currentNode->down->distance;
+                    currentNode = currentNode->down;
+                }
+                else if (currentNode->right != NULL && currentNode->right->distance < distance)
+                {
+                    for (int i = currentNode->index; i < currentNode->right->index; i++) map[i] = '4';
+                    distance = currentNode->right->distance;
+                    currentNode = currentNode->right;
+                }
+                else
+                {
+                    break;
+                }
+                
+            }
+
+            return true;    // Return true if the end point is found
+        }
         checkedNode.push(nodeQueue.front());                // Push the front node in the queue and put it into the checkedNode queue
         nodeQueue.front()->isVisited = true;                // Set isVisited value to true on the node
         nodeQueue.pop();                                    // Remove the node from the queue
     }
 
+    distance++;
     // Queue next nodes
     while (!checkedNode.empty())                            // Loop through until all nodes in the checkedNodes is empty
     {
         // Add the nodes that needs to be checked later after 
         Node* currentNode = checkedNode.front();
+        currentNode->distance = distance;
         if (currentNode->up != NULL && !currentNode->up->isVisited && !currentNode->up->willBeVisited)
         {
             currentNode->up->willBeVisited = true;

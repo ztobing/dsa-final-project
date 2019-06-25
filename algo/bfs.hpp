@@ -27,6 +27,7 @@ private:
     {
         char data;
         int index;
+        int distance;
         bool isVisited = false;
         bool willBeVisited = false;
         Node* up = NULL;
@@ -39,6 +40,7 @@ private:
     Node* startNode;
     Node** nodeReferences;
     queue<Node*> nodeQueue;
+    int distance;
     void generateMap();
     void checkNodeSurroundings(Node* node, int index);
     bool isJunction(int index);

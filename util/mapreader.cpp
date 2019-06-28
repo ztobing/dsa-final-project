@@ -30,18 +30,25 @@ bool MapReader::validate(const string &mapFile)
 {
     for (int i = 0; i < mapFile.length(); i++)
     {
+        if (mapFile[i] == '\n') 
+        {
+            if (this->spacing == -1)                                // Check if width value had been set
+            {
+                this->spacing = i + 1;                          // Set width value for the first time
+                break;
+            }
+        }
+    }
+
+    for (int i = 0; i < mapFile.length(); i++)
+    {
         if (mapFile[i] != '0' && mapFile[i] != '1' && mapFile[i] != '2' && mapFile[i] != '3' && mapFile[i] != '\n') return false;   // Check if current char is a valid input character
         if (mapFile[i] == '0' || mapFile[i] == '1') continue;   // Continue checking if character is 1 or 0
 
         if (mapFile[i] == '\n') 
         {
-            this->height++;                                     // Count map height
-        if (this->spacing == -1)                                // Check if width value had been set
-            {
-                this->spacing = i + 1;                          // Set width value for the first time
-                continue;
-            }
-            else continue;
+            this->height++;
+            continue;
         }
 
         if (mapFile[i] == '2' && this->start == -1) this->start = i;    // If character equals to 2 and it has never been set before

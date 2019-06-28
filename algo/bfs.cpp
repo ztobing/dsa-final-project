@@ -45,8 +45,9 @@ void BFS::generateMap()
 
         if (map[i] == '2')
         {
-            this->startNode = newNode;       // Set newNode as the starting point if current index's content is 2
+            this->startNode = newNode;                      // Set newNode as the starting point if current index's content is 2
             newNode->distance = 0;
+            newNode->sourceIndex = i;
         }
         nodeReferences[i] = newNode;                        // Store the reference to the new node in an array of node pointers
 
@@ -101,16 +102,16 @@ bool BFS::isJunction(int index)
     
     // Check up
     if (index - spacing > 0)
-        if (map[index - spacing] == '0') up = true;
+        if (map[index - spacing] == '0' || map[index - spacing] == '2' || map[index - spacing] == '3') up = true;
     // Check down
     if (index + spacing < map.length())
-        if (map[index + spacing] == '0') down = true;
+        if (map[index + spacing] == '0' || map[index + spacing] == '2' || map[index + spacing] == '3') down = true;
     // Check left
     if (index - 1 > 0)
-        if (map[index - 1] == '0') left = true;
+        if (map[index - 1] == '0' || map[index - 1] == '2' || map[index - 1] == '3') left = true;
     // Check right
     if (index + 1 < map.length())
-        if (map[index + 1] == '0') right = true;
+        if (map[index + 1] == '0' || map[index + 1] == '2' || map[index + 1] == '3') right = true;
     
     // Check if junction
     if ((up && left) || (up && right) || (down && left) || (down && right))
@@ -126,7 +127,7 @@ bool BFS::solve()
 {
     // Base case
     if (nodeQueue.empty()) return false;
-
+    // cout << "Distance: " << distance << ", Queue size: " << nodeQueue.size() << endl;
     queue<Node*> checkedNode;
     // Check if a node in the queue is '3'
     while (!nodeQueue.empty())                              // Loop through until all nodes in the main queue is empty
@@ -141,34 +142,70 @@ bool BFS::solve()
             while (true)
             {
                 if (currentNode->data == '2') return true;
-                if (currentNode->up != NULL && currentNode->up->distance < distance)
+                distance = currentNode->distance;
+                if (currentNode->up != NULL && currentNode->up->index == currentNode->sourceIndex)
                 {
                     for (int i = currentNode->index; i >= currentNode->up->index; i = i - spacing) map[i] = '4';
-                    distance = currentNode->up->distance;
+                    // distance = currentNode->up->distance;
                     currentNode = currentNode->up;
                 }
-                else if (currentNode->left != NULL && currentNode->left->distance < distance)
+                else if (currentNode->left != NULL && currentNode->left->index == currentNode->sourceIndex)
                 {
-                    for (int i = currentNode->index; i > currentNode->left->index; i--) map[i] = '4';
-                    distance = currentNode->left->distance;
+                    for (int i = currentNode->index; i >= currentNode->left->index; i--) map[i] = '4';
+                    // distance = currentNode->left->distance;
                     currentNode = currentNode->left;
                 }
-                else if (currentNode->down != NULL && currentNode->down->distance < distance)
+                else if (currentNode->down != NULL && currentNode->down->index == currentNode->sourceIndex)
                 {
                     for (int i = currentNode->index; i < currentNode->down->index; i = i + spacing) map[i] = '4';
-                    distance = currentNode->down->distance;
+                    // distance = currentNode->down->distance;
                     currentNode = currentNode->down;
                 }
-                else if (currentNode->right != NULL && currentNode->right->distance < distance)
+                else if (currentNode->right != NULL && currentNode->right->index == currentNode->sourceIndex)
                 {
                     for (int i = currentNode->index; i < currentNode->right->index; i++) map[i] = '4';
-                    distance = currentNode->right->distance;
+                    // distance = currentNode->right->distance;
                     currentNode = currentNode->right;
                 }
                 else
                 {
+                    cout << "SHIT" << endl;
                     break;
                 }
+                
+
+                // if (distance > -1) cout << "Backtracking on level " << distance << ", currentNodeIndex: " << currentNode->index << endl;
+                // if (currentNode->data == '2') return true;
+                // distance = currentNode->distance;
+                // if (currentNode->up != NULL && currentNode->up->distance < distance)
+                // {
+                //     for (int i = currentNode->index; i >= currentNode->up->index; i = i - spacing) map[i] = '4';
+                //     // distance = currentNode->up->distance;
+                //     currentNode = currentNode->up;
+                // }
+                // else if (currentNode->left != NULL && currentNode->left->distance < distance)
+                // {
+                //     for (int i = currentNode->index; i >= currentNode->left->index; i--) map[i] = '4';
+                //     // distance = currentNode->left->distance;
+                //     currentNode = currentNode->left;
+                // }
+                // else if (currentNode->down != NULL && currentNode->down->distance < distance)
+                // {
+                //     for (int i = currentNode->index; i < currentNode->down->index; i = i + spacing) map[i] = '4';
+                //     // distance = currentNode->down->distance;
+                //     currentNode = currentNode->down;
+                // }
+                // else if (currentNode->right != NULL && currentNode->right->distance < distance)
+                // {
+                //     for (int i = currentNode->index; i < currentNode->right->index; i++) map[i] = '4';
+                //     // distance = currentNode->right->distance;
+                //     currentNode = currentNode->right;
+                // }
+                // else
+                // {
+                //     cout << "SHIT!" << endl;
+                //     break;
+                // }
                 
             }
 
@@ -189,21 +226,25 @@ bool BFS::solve()
         if (currentNode->up != NULL && !currentNode->up->isVisited && !currentNode->up->willBeVisited)
         {
             currentNode->up->willBeVisited = true;
+            currentNode->up->sourceIndex = currentNode->index;
             nodeQueue.push(currentNode->up);
         }
         if (currentNode->down != NULL && !currentNode->down->isVisited && !currentNode->down->willBeVisited)
         {
             currentNode->down->willBeVisited = true;
+            currentNode->down->sourceIndex = currentNode->index;
             nodeQueue.push(currentNode->down);
         }
         if (currentNode->left != NULL && !currentNode->left->isVisited && !currentNode->left->willBeVisited)
         {
             currentNode->left->willBeVisited = true;
+            currentNode->left->sourceIndex = currentNode->index;
             nodeQueue.push(currentNode->left);
         }
         if (currentNode->right != NULL && !currentNode->right->isVisited && !currentNode->right->willBeVisited)
         {
             currentNode->right->willBeVisited = true;
+            currentNode->right->sourceIndex = currentNode->index;
             nodeQueue.push(currentNode->right);
         }
         checkedNode.pop();

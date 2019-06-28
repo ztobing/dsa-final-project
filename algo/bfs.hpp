@@ -27,6 +27,7 @@ private:
     {
         char data;
         int index;
+        int sourceIndex = -1;
         int distance;
         bool isVisited = false;
         bool willBeVisited = false;

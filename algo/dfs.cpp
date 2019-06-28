@@ -99,16 +99,16 @@ bool DFS::isJunction(int index)
     
     // Check up
     if (index - spacing > 0)
-        if (map[index - spacing] == '0') up = true;
+        if (map[index - spacing] == '0' || map[index - spacing] == '2' || map[index - spacing] == '3') up = true;
     // Check down
     if (index + spacing < map.length())
-        if (map[index + spacing] == '0') down = true;
+        if (map[index + spacing] == '0' || map[index + spacing] == '2' || map[index + spacing] == '3') down = true;
     // Check left
     if (index - 1 > 0)
-        if (map[index - 1] == '0') left = true;
+        if (map[index - 1] == '0' || map[index - 1] == '2' || map[index - 1] == '3') left = true;
     // Check right
     if (index + 1 < map.length())
-        if (map[index + 1] == '0') right = true;
+        if (map[index + 1] == '0' || map[index + 1] == '2' || map[index + 1] == '3') right = true;
     
     // Check if junction
     if ((up && left) || (up && right) || (down && left) || (down && right))

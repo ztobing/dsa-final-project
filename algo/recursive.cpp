@@ -66,17 +66,17 @@ bool Recursive::recursive(int index, int lastIndex, int spacing)
             return true;
         }
 
-    // Move right
-    if (index + 1 != lastIndex)
-        if (recursive(index + 1, index, spacing))
+    // Move down
+    if (index + spacing != lastIndex)
+        if (recursive(index + spacing, index, spacing))
         {
             map[index] = '4';                   // Set the current index as the correct path
             return true;
         }
 
-    // Move down
-    if (index + spacing != lastIndex)
-        if (recursive(index + spacing, index, spacing))
+    // Move right
+    if (index + 1 != lastIndex)
+        if (recursive(index + 1, index, spacing))
         {
             map[index] = '4';                   // Set the current index as the correct path
             return true;

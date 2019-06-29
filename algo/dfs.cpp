@@ -137,15 +137,6 @@ bool DFS::solve(Node* currentNode, Node* lastNode, int spacing)
                 for (int i = currentNode->index; i >= currentNode->left->index; i--) map[i] = '4';
                 return true;
             }
-    
-    // Move right
-    if (currentNode->right != NULL)
-        if (currentNode->right != lastNode && !currentNode->right->isVisited)
-            if (solve(currentNode->right , currentNode, spacing))
-            {
-                for (int i = currentNode->index; i <= currentNode->right->index; i++) map[i] = '4';
-                return true;
-            }
 
     // Move down
     if (currentNode->down != NULL)
@@ -156,6 +147,15 @@ bool DFS::solve(Node* currentNode, Node* lastNode, int spacing)
                 return true;
             }
 
+    // Move right
+    if (currentNode->right != NULL)
+        if (currentNode->right != lastNode && !currentNode->right->isVisited)
+            if (solve(currentNode->right , currentNode, spacing))
+            {
+                for (int i = currentNode->index; i <= currentNode->right->index; i++) map[i] = '4';
+                return true;
+            }
+            
     // Move up
     if (currentNode->up != NULL)
         if (currentNode->up != lastNode && !currentNode->up->isVisited)

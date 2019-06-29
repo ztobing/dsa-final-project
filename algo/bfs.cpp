@@ -169,7 +169,6 @@ bool BFS::solve()
                 }
                 else
                 {
-                    cout << "SHIT" << endl;
                     break;
                 }
                 

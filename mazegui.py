@@ -31,8 +31,10 @@ class MainWindow(BaseWidget):
             return
         for i in range(1, len(mazeFileContent) - 2):
             if mazeFileContent[i][0] == "0" or mazeFileContent[i][-1] == "0":
-                self._lblStatus.value = "STATUS: Error reading " + str(path.split("/")[-1]) + ": "
+                self._lblStatus.value = "STATUS: Error reading " + str(path.split("/")[-1]) + ": Left and/or right wall not valid"
                 return
+            if "2" in mazeFileContent[i] or "3" in mazeFileContent[i]:
+                self._lblStatus.value = "STATUS: Error reading " + str(path.split("/")[-1]) + ": Start/end point must be at the wall"
         if "0" in mazeFileContent[0]:
             self._lblStatus.value = "STATUS: Error reading " + str(path.split("/")[-1]) + ": Bottom wall not valid"
             return       
